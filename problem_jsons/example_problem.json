@@ -1,0 +1,11 @@
+{
+    "problem_type": "addition",
+    "review_history": [],
+    "problem_examples": [
+        {
+            "problem_example_id": 1,
+            "prompt_path": "add1.png",
+            "solution_path": "add1solution.png"
+        }
+    ]
+}
