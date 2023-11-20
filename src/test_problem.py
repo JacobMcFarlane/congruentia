@@ -1,10 +1,9 @@
-from src.problem import Problem
+from problem import Problem
 import pytest
 
 @pytest.fixture
 def make_problem():
     return Problem()
 
-class TestProblem:
-    def test_get_example_problem():
-        pass
+def test_get_example_problem():
+    assert True
