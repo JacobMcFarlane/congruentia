@@ -1,11 +1,23 @@
 {
     "problem_type": "addition",
-    "review_history": [],
+    "review_history": [
+        {
+            "date": "20/11/2023",
+            "correct": true,
+            "problem": 1
+        }
+    ],
+    "next_review": "11/21/2023",
     "problem_examples": [
         {
             "problem_example_id": 1,
             "prompt_path": "add1.png",
-            "solution_path": "add1solution.png"
+            "solution_path": "add1s.png"
+        },
+        {
+            "problem_example_id": 2,
+            "prompt_path": "add2.png",
+            "solution_path": "add2s.png"
         }
     ]
 }
