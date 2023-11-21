@@ -1,9 +1,50 @@
-from problem import Problem
 import pytest
+import os
+
+from problem import Problem
+
+
+def problem_from_json(json_path):
+    json_path
+
 
 @pytest.fixture
-def make_problem():
-    return Problem()
+def addition_problem():
+    problem_dict = {
+        "problem_type": "addition",
+        "review_history": [{"date": "20/11/2023", "is_correct": True, "problem": 1}],
+        "next_review": "11/21/2023",
+        "problem_examples": [
+            {
+                "problem_example_id": 1,
+                "prompt_path": "add1.png",
+                "solution_path": "add1s.png",
+            },
+            {
+                "problem_example_id": 2,
+                "prompt_path": "add2.png",
+                "solution_path": "add2s.png",
+            },
+        ],
+    }
 
-def test_get_example_problem():
-    assert True
+    json_prob = Problem(
+        problem_type=problem_dict["problem_type"],
+        review_history=problem_dict["review_history"],
+        problem_examples=problem_dict["problem_examples"],
+        next_review=problem_dict["next_review"],
+    )
+    return json_prob
+
+
+def test_get_example_problem(addition_problem):
+    assert addition_problem.get_example_problem() == 2
+
+
+def test_record_response(addition_problem):
+    addition_problem.record_response("19/1/2030", True, 8)
+    assert addition_problem.review_history[-1] == {
+        "date": "19/1/2030",
+        "is_correct": True,
+        "problem": 8,
+    }
