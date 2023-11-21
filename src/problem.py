@@ -1,5 +1,9 @@
 import random
 
+from PIL import Image
+from datetime import date
+from pathlib import Path
+
 
 class Problem:
     def __init__(self, problem_type, review_history, problem_examples, next_review):
@@ -8,14 +12,36 @@ class Problem:
         self.problem_examples = problem_examples
         self.next_review = next_review
 
-    def review_problem(self):
+    def review_problem(self, path_prefix="../problems/"):
         """Performs a review of a problem"""
-        example_problem = get_example_problem()
-        # Display prompt
-        # Ask for keypress to display image of solution
-        # Then ask for a y/n on whether response was correct
-        # Save that response
-        pass
+
+        path = Path(path_prefix)
+        example_problem = self.get_example_problem()
+
+        prompt = Image.open(path / example_problem["prompt_path"])
+        prompt.show()
+
+        input("Press any key to see solution")
+
+        solution = Image.open(path / example_problem["solution_path"])
+        solution.show()
+
+        is_correct = ""
+        while not (is_correct == "y" or is_correct == "n"):
+            is_correct = input("Was your response correct? (y/n)")
+            if not (is_correct == "y" or is_correct == "n"):
+                print(f"Input {is_correct} not y/n, please try again")
+
+        if is_correct == "y":
+            is_correct = True
+        else:
+            is_correct = False
+
+        today = date.today()
+
+        self.record_response(str(today), is_correct, example_problem["problem_ex_id"])
+
+        print(f"Review round complete for {self.problem_type}")
 
     def get_example_problem(self):
         """Gets a problem number to display for review"""
