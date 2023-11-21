@@ -40,7 +40,7 @@ class Problem:
         today = date.today()
 
         self.record_response(str(today), is_correct, example_problem["problem_ex_id"])
-
+        self.update_next_review()
         print(f"Review round complete for {self.problem_type}")
 
     def get_example_problem(self):
@@ -70,4 +70,7 @@ class Problem:
         """Based on review history, updates next review date."""
         # TODO implement spaced repition algo
 
+        pass
+
+    def save_problem_to_json(self, save_path):
         pass
