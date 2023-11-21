@@ -1,0 +1,23 @@
+{
+    "problem_type": "subtraction",
+    "review_history": [
+        {
+            "date": "1/11/2023",
+            "is_correct": true,
+            "problem_ex_id": 0
+        }
+    ],
+    "next_review": "11/21/2023",
+    "problem_examples": [
+        {
+            "problem_ex_id": 0,
+            "prompt_path": "sub1.png",
+            "solution_path": "sub1s.png"
+        },
+        {
+            "problem_ex_id": 1,
+            "prompt_path": "sub2.png",
+            "solution_path": "sub2s.png"
+        }
+    ]
+}
