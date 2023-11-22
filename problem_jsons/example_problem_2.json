@@ -2,12 +2,12 @@
     "problem_type": "subtraction",
     "review_history": [
         {
-            "date": "1/11/2023",
+            "date": "2023-11-01",
             "is_correct": true,
             "problem_ex_id": 0
         }
     ],
-    "next_review": "11/21/2023",
+    "next_review": "2023-21-11",
     "problem_examples": [
         {
             "problem_ex_id": 0,
