@@ -56,33 +56,33 @@ def test_record_response(addition_problem):
     "history,result",
     [
         (
-            [{"date": "20/11/2023", "is_correct": True, "problem_ex_id": 1}],
-            "20/11/2023",
+            [{"date": "2023-11-20", "is_correct": True, "problem_ex_id": 1}],
+            "2023-11-20",
         ),
         (
             [
-                {"date": "20/11/2023", "is_correct": True, "problem_ex_id": 1},
-                {"date": "20/11/2023", "is_correct": True, "problem_ex_id": 2},
+                {"date": "2023-11-20", "is_correct": True, "problem_ex_id": 1},
+                {"date": "2023-11-20", "is_correct": True, "problem_ex_id": 2},
             ],
-            "21/11/2023",
+            "2023-11-21",
         ),
         (
             [
-                {"date": "20/11/2023", "is_correct": True, "problem_ex_id": 1},
-                {"date": "21/11/2023", "is_correct": False, "problem_ex_id": 2},
+                {"date": "2023-11-21", "is_correct": True, "problem_ex_id": 1},
+                {"date": "2023-11-21", "is_correct": False, "problem_ex_id": 2},
             ],
-            "21/11/2023",
+            "2023-11-21",
         ),
         (
             [
-                {"date": "20/9/2023", "is_correct": True, "problem_ex_id": 1},
-                {"date": "20/11/2023", "is_correct": True, "problem_ex_id": 2},
+                {"date": "2023-09-20", "is_correct": True, "problem_ex_id": 1},
+                {"date": "2023-11-21", "is_correct": True, "problem_ex_id": 2},
             ],
-            "19/03/2024",
+            "2024-03-22",
         ),
     ],
 )
 def test_spaced_algo(history, result):
-    prob = Problem("01/01/2020", history, "", "")
+    prob = Problem("2020-01-01", history, "", "")
     prob.update_next_review()
     assert prob.next_review == result

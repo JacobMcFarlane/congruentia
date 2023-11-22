@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 class Problem:
-    date_format = "%d/%m/%Y"
+    date_format = "%Y-%m-%d"
 
     def __init__(self, problem_type, review_history, problem_examples, next_review):
         self.problem_type = problem_type
@@ -39,9 +39,9 @@ class Problem:
         else:
             is_correct = False
 
-        today = date.today()
+        today = datetime.strftime(date.today(), self.date_format)
 
-        self.record_response(str(today), is_correct, example_problem["problem_ex_id"])
+        self.record_response(today, is_correct, example_problem["problem_ex_id"])
         self.update_next_review()
         print(f"Review round complete for {self.problem_type}")
 
@@ -76,9 +76,7 @@ class Problem:
         most_recent_review = datetime.strptime(
             self.review_history[-1]["date"], self.date_format
         )
-        print(most_recent_review)
         span = self.get_last_span()
-        print(span)
         if not bool(self.review_history[-1]["is_correct"]) | (span < timedelta(0)):
             self.next_review = most_recent_review
         elif span < timedelta(days=0):
@@ -91,13 +89,22 @@ class Problem:
             self.next_review = most_recent_review + timedelta(days=16)
         else:
             self.next_review = most_recent_review + (span - timedelta(days=1)) * 2
-        print(self.next_review)
+        print(f"Next review for: {self.next_review}")
         self.next_review = datetime.strftime(self.next_review, self.date_format)
 
     def save_problem_to_json(self, save_path):
-        pass
+        problem_dict = {
+            "problem_type": self.problem_type,
+            "review_history": self.review_history,
+            "next_review": self.next_review,
+            "problem_examples": self.problem_examples,
+        }
+
+        with open(save_path, "w") as outfile:
+            outfile.write(problem_dict)
 
     def get_last_span(self):
+        print(len(self.review_history))
         if len(self.review_history) < 2:
             return timedelta(days=-1)
         most_recent_review = datetime.strptime(
