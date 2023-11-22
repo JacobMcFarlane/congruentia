@@ -1,11 +1,13 @@
 import random
 
 from PIL import Image
-from datetime import date
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
 
 class Problem:
+    date_format = "%d/%m/%Y"
+
     def __init__(self, problem_type, review_history, problem_examples, next_review):
         self.problem_type = problem_type
         self.review_history = review_history
@@ -68,9 +70,40 @@ class Problem:
 
     def update_next_review(self):
         """Based on review history, updates next review date."""
-        # TODO implement spaced repition algo
+        # Based on SM-0 uses reps of 1, 7, 16, 35, (i - 1) * 2
+        # If the last review is wrong, revert to 0
 
-        pass
+        most_recent_review = datetime.strptime(
+            self.review_history[-1]["date"], self.date_format
+        )
+        print(most_recent_review)
+        span = self.get_last_span()
+        print(span)
+        if not bool(self.review_history[-1]["is_correct"]) | (span < timedelta(0)):
+            self.next_review = most_recent_review
+        elif span < timedelta(days=0):
+            self.next_review = most_recent_review + timedelta(days=0)
+        elif span < timedelta(days=7):
+            self.next_review = most_recent_review + timedelta(days=1)
+        elif span < timedelta(days=16):
+            self.next_review = most_recent_review + timedelta(days=7)
+        elif span < timedelta(days=35):
+            self.next_review = most_recent_review + timedelta(days=16)
+        else:
+            self.next_review = most_recent_review + (span - timedelta(days=1)) * 2
+        print(self.next_review)
+        self.next_review = datetime.strftime(self.next_review, self.date_format)
 
     def save_problem_to_json(self, save_path):
         pass
+
+    def get_last_span(self):
+        if len(self.review_history) < 2:
+            return timedelta(days=-1)
+        most_recent_review = datetime.strptime(
+            self.review_history[-1]["date"], self.date_format
+        )
+        second_most_recent_review = datetime.strptime(
+            self.review_history[-2]["date"], self.date_format
+        )
+        return most_recent_review - second_most_recent_review

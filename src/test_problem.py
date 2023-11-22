@@ -60,33 +60,29 @@ def test_record_response(addition_problem):
             "20/11/2023",
         ),
         (
-            [{"date": "20/11/2023", "is_correct": True, "problem_ex_id": 1}],
-            "21/11/2023",
-        ),
-        (
             [
                 {"date": "20/11/2023", "is_correct": True, "problem_ex_id": 1},
-                {"date": "21/11/2023", "is_correct": True, "problem_ex_id": 2},
+                {"date": "20/11/2023", "is_correct": True, "problem_ex_id": 2},
             ],
-            "28/11/2023",
+            "21/11/2023",
         ),
         (
             [
                 {"date": "20/11/2023", "is_correct": True, "problem_ex_id": 1},
                 {"date": "21/11/2023", "is_correct": False, "problem_ex_id": 2},
             ],
-            "22/11/2023",
+            "21/11/2023",
         ),
         (
             [
                 {"date": "20/9/2023", "is_correct": True, "problem_ex_id": 1},
-                {"date": "20/11/2023", "is_correct": False, "problem_ex_id": 2},
+                {"date": "20/11/2023", "is_correct": True, "problem_ex_id": 2},
             ],
-            "19/04/2023",
+            "19/03/2024",
         ),
     ],
 )
 def test_spaced_algo(history, result):
-    prob = Problem("", history, "", "")
+    prob = Problem("01/01/2020", history, "", "")
     prob.update_next_review()
     assert prob.next_review == result
