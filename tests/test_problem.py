@@ -1,6 +1,7 @@
 import pytest
 
 from congruentia import problem
+from congruentia import utils
 
 
 def problem_from_json(json_path):
@@ -9,33 +10,7 @@ def problem_from_json(json_path):
 
 @pytest.fixture
 def addition_problem():
-    problem_dict = {
-        "problem_type": "addition",
-        "review_history": [
-            {"date": "20/11/2023", "is_correct": True, "problem_ex_id": 1}
-        ],
-        "next_review": "11/21/2023",
-        "problem_examples": [
-            {
-                "problem_ex_id": 0,
-                "prompt_path": "add1.png",
-                "solution_path": "add1s.png",
-            },
-            {
-                "problem_ex_id": 1,
-                "prompt_path": "add2.png",
-                "solution_path": "add2s.png",
-            },
-        ],
-    }
-
-    json_prob = problem.Problem(
-        problem_type=problem_dict["problem_type"],
-        review_history=problem_dict["review_history"],
-        problem_examples=problem_dict["problem_examples"],
-        next_review=problem_dict["next_review"],
-    )
-    return json_prob
+    return utils.problem_from_json("problem_jsons/example_problem.json")
 
 
 def test_get_example_problem(addition_problem):
