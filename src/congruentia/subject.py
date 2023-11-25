@@ -8,25 +8,27 @@ class Subject:
         self.problems = problems
 
     def review_subject(self):
-        self.generate_review_list()
-        while len(self.review_list()) > 0:
+        self.generate_review_list(datetime.today())
+        while len(self.review_list) > 0:
             problem = self.review_list.pop()
             problem.review_problem()
-            self.update_review_list()
+            self.update_review_list(datetime.today())
 
     def generate_review_list(self, date_to_check):
         """Constructs initial ordering of review in review list"""
-
-        self.review_list = [
-            problem
-            for problem in self.problems
-            if datetime.strptime(self.next_review, self.date_format) <= date_to_check
-        ]
+        self.review_list = self._filter_list_on_date(self.problems, date_to_check)
 
     def update_review_list(self, date_to_check):
         """Reorder list after a review based on updated review dates"""
-        self.review_list = [
-            problem
-            for problem in self.review_list
-            if datetime.strptime(self.next_review, self.date_format) <= date_to_check
-        ]
+        self.review_list = self._filter_list_on_date(self.review_list, date_to_check)
+
+    @staticmethod
+    def _filter_list_on_date(problem_list, date_to_check):
+        updated_list = []
+        for subject_problem in problem_list:
+            subject_problem_next_review = datetime.strptime(
+                subject_problem.next_review, subject_problem.date_format
+            )
+            if subject_problem_next_review <= date_to_check:
+                updated_list.append(subject_problem)
+        return updated_list
