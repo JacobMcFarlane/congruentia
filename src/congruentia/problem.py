@@ -14,7 +14,7 @@ class Problem:
         self.problem_examples = problem_examples
         self.next_review = next_review
 
-    def review_problem(self, path_prefix="../problems/"):
+    def review_problem(self, path_prefix="problems/"):
         """Performs a review of a problem"""
 
         path = Path(path_prefix)
