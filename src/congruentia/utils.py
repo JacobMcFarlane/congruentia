@@ -1,4 +1,7 @@
 import json
+import os
+
+from congruentia import subject
 from congruentia import problem
 
 
@@ -16,9 +19,17 @@ def problem_from_json(json_path):
     return json_prob
 
 
-def test_problem(path="../problem_jsons/example_problem.json"):
+def test_problem(path="problem_jsons/example_problem.json"):
     prob = problem_from_json(path)
     prob.review_problem()
+
+
+def subject_from_directory(dir_path="problem_jsons/"):
+    probs = []
+    for problem_path in os.listdir(dir_path):
+        probs.append(problem_from_json(f"{dir_path}/{problem_path}"))
+
+    return subject.Subject(probs)
 
 
 if __name__ == "__main__":
