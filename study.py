@@ -2,4 +2,4 @@
 from congruentia import utils
 
 if __name__ == "__main__":
-    utils.subject_from_directory().review_subject()
+    utils.subject_from_directory("linear_alg/", "linear_alg/problems/").review_subject()
