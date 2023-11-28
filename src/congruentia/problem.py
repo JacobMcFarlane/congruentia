@@ -1,4 +1,5 @@
 import random
+import json
 
 from PIL import Image
 from datetime import date, datetime, timedelta
@@ -8,11 +9,14 @@ from pathlib import Path
 class Problem:
     date_format = "%Y-%m-%d"
 
-    def __init__(self, problem_type, review_history, problem_examples, next_review):
+    def __init__(
+        self, problem_type, review_history, problem_examples, next_review, save_path
+    ):
         self.problem_type = problem_type
         self.review_history = review_history
         self.problem_examples = problem_examples
         self.next_review = next_review
+        self.save_path = save_path
 
     def review_problem(self, path_prefix="problems/"):
         """Performs a review of a problem"""
@@ -92,7 +96,7 @@ class Problem:
         print(f"Next review for: {self.next_review}")
         self.next_review = datetime.strftime(self.next_review, self.date_format)
 
-    def save_problem_to_json(self, save_path):
+    def save_problem_to_json(self):
         problem_dict = {
             "problem_type": self.problem_type,
             "review_history": self.review_history,
@@ -100,7 +104,9 @@ class Problem:
             "problem_examples": self.problem_examples,
         }
 
-        with open(save_path, "w") as outfile:
+        problem_dict = json.dumps(problem_dict)
+
+        with open(self.save_path, "w") as outfile:
             outfile.write(problem_dict)
 
     def get_last_span(self):

@@ -4,14 +4,16 @@ from datetime import date, datetime, timedelta
 class Subject:
     review_list = []
 
-    def __init__(self, problems):
+    def __init__(self, problems, subproblem_path_prefix="problems/"):
         self.problems = problems
+        self.subproblem_path_prefix = subproblem_path_prefix
 
     def review_subject(self):
         self.generate_review_list(datetime.today())
         while len(self.review_list) > 0:
             problem = self.review_list.pop()
-            problem.review_problem()
+            problem.review_problem(self.subproblem_path_prefix)
+            problem.save_problem_to_json()
             self.update_review_list(datetime.today())
 
     def generate_review_list(self, date_to_check):
