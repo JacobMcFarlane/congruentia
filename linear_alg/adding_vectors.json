@@ -1,0 +1,33 @@
+{
+    "problem_type": "add_vectors",
+    "review_history": [
+        {
+            "date": "2023-11-28",
+            "is_correct": true,
+            "problem_ex_id": 0
+        },
+        {
+            "date": "2023-11-28",
+            "is_correct": true,
+            "problem_ex_id": 1
+        }
+    ],
+    "next_review": "2023-11-29",
+    "problem_examples": [
+        {
+            "problem_ex_id": 0,
+            "prompt_path": "addition_1.PNG",
+            "solution_path": "addition_1s.PNG"
+        },
+        {
+            "problem_ex_id": 1,
+            "prompt_path": "addition_2.PNG",
+            "solution_path": "addition_2s.PNG"
+        },
+        {
+            "problem_ex_id": 2,
+            "prompt_path": "addition_3.PNG",
+            "solution_path": "addition_3s.PNG"
+        }
+    ]
+}
