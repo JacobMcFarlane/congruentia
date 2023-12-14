@@ -2,7 +2,8 @@ import json
 
 from PIL import Image
 from datetime import date, datetime, timedelta
-import abstractmethod from abc
+from abc import abstractmethod
+
 
 class Question:
     def __init__(self, question_id, prompt, solution, complexity):
@@ -15,7 +16,7 @@ class Question:
     def review_question(self):
         ...
 
-    @bstractmethod
+    @abstractmethod
     def display_question(self):
         ...
 
