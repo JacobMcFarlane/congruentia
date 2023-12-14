@@ -4,33 +4,25 @@ import json
 from PIL import Image
 from datetime import date, datetime, timedelta
 from pathlib import Path
+from question import Question
 
 
 class Problem:
     date_format = "%Y-%m-%d"
 
-    def __init__(
-        self, problem_type, review_history, problem_examples, next_review, save_path
-    ):
+    def __init__(self, problem_type, review_history, questions, next_review, save_path):
         self.problem_type = problem_type
         self.review_history = review_history
-        self.problem_examples = problem_examples
+        self.questions = questions
         self.next_review = next_review
         self.save_path = save_path
 
-    def review_problem(self, path_prefix="problems/"):
+    def review_problem(self):
         """Performs a review of a problem"""
 
-        path = Path(path_prefix)
-        example_problem = self.get_example_problem()
+        example_question = self.get_example_question()
 
-        prompt = Image.open(path / example_problem["prompt_path"])
-        prompt.show()
-
-        input("Press any key to see solution")
-
-        solution = Image.open(path / example_problem["solution_path"])
-        solution.show()
+        example_question.review_question()
 
         is_correct = ""
         while not (is_correct == "y" or is_correct == "n"):
@@ -45,26 +37,24 @@ class Problem:
 
         today = datetime.strftime(date.today(), self.date_format)
 
-        self.record_response(today, is_correct, example_problem["problem_ex_id"])
+        self.record_response(today, is_correct, example_question.question_id)
         self.update_next_review()
         print(f"Review round complete for {self.problem_type}")
 
-    def get_example_problem(self):
+    def get_example_question(self):
         """Gets a problem number to display for review"""
         review_history = [review["problem_ex_id"] for review in self.review_history]
 
-        available_examples = [
-            problem["problem_ex_id"] for problem in self.problem_examples
-        ]
+        available_examples = [problem["problem_ex_id"] for problem in self.questions]
 
         unused_examples = list(set(available_examples) - set(review_history))
 
         # if any of the examples haven't been used yet, we return one of those examples
         if len(unused_examples) > 0:
-            return self.problem_examples[unused_examples[0]]
+            return self.questions[unused_examples[0]]
 
         # Grab a random problem otherwise
-        return self.problem_examples[random.choice(available_examples)]
+        return self.questions[random.choice(available_examples)]
 
     def record_response(self, date, is_correct, problem):
         """Transforms user response into an entry in review history"""
@@ -101,7 +91,9 @@ class Problem:
             "problem_type": self.problem_type,
             "review_history": self.review_history,
             "next_review": self.next_review,
-            "problem_examples": self.problem_examples,
+            "questions": [
+                question.save_question_to_json() for question in self.questions
+            ],
         }
 
         problem_dict = json.dumps(problem_dict)

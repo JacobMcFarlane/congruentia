@@ -13,15 +13,19 @@ class Question:
 
     @abstractmethod
     def review_question(self):
-        pass
+        ...
 
     @bstractmethod
     def display_question(self):
-        pass
+        ...
 
     @abstractmethod
     def display_solution():
-        pass
+        ...
+
+    @abstractmethod
+    def save_to_json():
+        ...
 
 
 class PNGQuestion(Question):
@@ -41,3 +45,11 @@ class PNGQuestion(Question):
     def display_solution(self, solution):
         solution = Image.open(self.solution)
         solution.show()
+
+    def save_to_json(self):
+        return {
+            "question_id": self.question_id,
+            "solution": self.solution,
+            "question": self.question,
+            "complexity": self.complexity,
+        }
