@@ -2,12 +2,12 @@ import json
 
 from PIL import Image
 from datetime import date, datetime, timedelta
-
+import abstractmethod from abc
 
 class Question:
-    def __init__(self, question_id, question, solution, complexity):
+    def __init__(self, question_id, prompt, solution, complexity):
         self.question_id = question_id
-        self.question = question
+        self.prompt = prompt
         self.solution = solution
         self.complexity = complexity
 
@@ -39,7 +39,7 @@ class PNGQuestion(Question):
         self.display_solution()
 
     def display_question(self):
-        prompt = Image.open(self.question)
+        prompt = Image.open(self.prompt)
         prompt.show()
 
     def display_solution(self, solution):
@@ -50,6 +50,6 @@ class PNGQuestion(Question):
         return {
             "question_id": self.question_id,
             "solution": self.solution,
-            "question": self.question,
+            "prompt": self.prompt,
             "complexity": self.complexity,
         }
